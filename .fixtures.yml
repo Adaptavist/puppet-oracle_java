@@ -1,0 +1,10 @@
+fixtures:
+  repositories:
+    packages_repo:
+      repo: "ssh://git@stash.adaptavist.com:7999/pup/puppet-packages_repos.git"
+    stdlib:
+      repo: "https://github.com/Adaptavist/puppetlabs-stdlib"
+    apt:
+      repo: "https://github.com/Adaptavist/puppetlabs-apt"
+  symlinks:
+    oracle_java: "#{source_dir}"
