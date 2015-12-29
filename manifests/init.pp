@@ -33,6 +33,9 @@ class oracle_java(
                 8 => 'java-8-oracle'
             }
         }
+        default: {
+            fail("oracle_java - Unsupported Operating System family: ${::osfamily}")
+        }
     }
 
     $default_version = $default_ver ? {
@@ -48,6 +51,6 @@ class oracle_java(
         ->
         oracle_java::set_default { $alt_names[$default_version]: }
     } else {
-        err("Could not find default version '$default_version' in versions to be installed.")
+        err("Could not find default version '${default_version}' in versions to be installed.")
     }
 }

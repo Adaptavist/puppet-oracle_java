@@ -44,4 +44,13 @@ describe 'oracle_java', :type => 'class' do
       )
     end
   end
+
+  context "Should fail with unsupported OS family" do
+
+    let(:facts) { { :osfamily => 'Solaris' } }
+
+    it do
+      should raise_error(Puppet::Error, /oracle_java - Unsupported Operating System family: Solaris/)
+    end
+  end
 end
