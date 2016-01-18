@@ -1,4 +1,5 @@
 # Puppet module for Java installation
+[![Build Status](https://travis-ci.org/Adaptavist/puppet-oracle_java.svg?branch=master)](https://travis-ci.org/Adaptavist/puppet-oracle_java)
 
 * Allows installation of multiple versions of Java (defaults to oracle-7-jdk, supports sun-6-jdk also)
 * Uses Adaptavist repo
