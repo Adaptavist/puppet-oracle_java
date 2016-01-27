@@ -53,4 +53,32 @@ describe 'oracle_java', :type => 'class' do
       should raise_error(Puppet::Error, /oracle_java - Unsupported Operating System family: Solaris/)
     end
   end
+
+  context "Should link to jdk's on Redhat family" do
+    let(:facts) { { :host => Hash.new, :osfamily => 'RedHat' } }
+    let(:params) { { :versions => [7,8], :default_ver => 8 } }
+
+    it do
+      should contain_package('jdk-1.7*')
+      should contain_package('jdk1.8*')
+      should contain_exec('Create symlink for jdk in /var/lib/jvm/jdk8').with(
+        'command' => 'ln -sf /usr/java/$(ls /usr/java/ | grep jdk1.8) /usr/lib/jvm/jdk8'
+      )
+      should contain_exec('Create symlink for jdk in /var/lib/jvm/jdk7').with(
+          'command' => 'ln -sf /usr/java/$(ls /usr/java/ | grep jdk1.7) /usr/lib/jvm/jdk7'
+      )
+      should contain_exec('Install alternatives for java 7').with(
+          'command' => 'alternatives --install /usr/bin/java java /usr/java/$(ls /usr/java/ | grep jdk1.7)/bin/java 200000'
+      )
+      should contain_exec('Install alternatives for javac 7').with(
+          'command' => 'alternatives --install /usr/bin/javac javac /usr/java/$(ls /usr/java/ | grep jdk1.7)/bin/javac 200000'
+      )
+      should contain_exec('Install alternatives for java 8').with(
+          'command' => 'alternatives --install /usr/bin/java java /usr/java/$(ls /usr/java/ | grep jdk1.8)/bin/java 200000'
+      )
+      should contain_exec('Install alternatives for javac 8').with(
+          'command' => 'alternatives --install /usr/bin/javac javac /usr/java/$(ls /usr/java/ | grep jdk1.8)/bin/javac 200000'
+      )
+    end
+  end
 end

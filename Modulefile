@@ -1,5 +1,5 @@
 name 'adaptavist/oracle_java'
-version '0.2.5'
+version '0.2.6'
 source 'git@bitbucket.org:Adaptavist/puppet-oracle_java.git'
 author 'adaptavist'
 summary 'oracle_java Module' 
