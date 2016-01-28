@@ -3,7 +3,7 @@ define oracle_java::java_install($available, $alt_names, $ensure = 'latest') {
     if has_key($available, $name) {
         if ($name == '6' and $::operatingsystem == 'ubuntu' and $::operatingsystemrelease == '14.04') {
             package { 'sun-java6-jre':
-                ensure  => installed,
+                ensure  => $ensure,
             }
         } else {
             package {
