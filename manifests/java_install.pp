@@ -28,7 +28,7 @@ define oracle_java::java_install($available, $alt_names, $ensure = 'latest') {
             exec { "Create symlink for jdk in /var/lib/jvm/jdk${name}":
                 command  => "ln -sf /usr/java/$(ls /usr/java/ | grep jdk1.${name}) /usr/lib/jvm/jdk${name}",
                 provider => shell,
-                require  => Package[$package_name],
+                require  => [Package[$package_name], File['/usr/lib/jvm']]
             }
         }
 
