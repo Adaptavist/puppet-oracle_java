@@ -46,11 +46,11 @@ class oracle_java(
     if member($versions, $default_version) {
         if $::osfamily == 'RedHat'{
             file { '/usr/lib/jvm':
-                    ensure  => directory,
-                    owner   => 'root',
-                    group   => 'root',
-                    mode    => '0644',
-            } 
+                    ensure => directory,
+                    owner  => 'root',
+                    group  => 'root',
+                    mode   => '0644',
+            }
         }
         oracle_java::java_install { $versions:
             available => $available,
