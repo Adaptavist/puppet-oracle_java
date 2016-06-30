@@ -3,3 +3,5 @@ require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint'
 
 task :default => [:spec, :lint]
+
+PuppetLint.configuration.send('disable_140chars')
