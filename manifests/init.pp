@@ -1,36 +1,36 @@
 # Installs Oracle Java
 class oracle_java(
-    $versions = [ 7 ],
+    $versions = [ '7' ],
     $default_ver = undef
 ){
 
     validate_array($versions)
 
     case $::osfamily{
-        RedHat: {
+        'RedHat': {
             $available = {
-                6 => 'jdk-1.6*',
-                7 => 'jdk-1.7*',
-                8 => 'jdk1.8*'
+                '6' => 'jdk-1.6*',
+                '7' => 'jdk-1.7*',
+                '8' => 'jdk1.8*'
             }
 
             $alt_names = {
-                6 => 'jdk1.6',
-                7 => 'jdk1.7',
-                8 => 'jdk1.8'
+                '6' => 'jdk1.6',
+                '7' => 'jdk1.7',
+                '8' => 'jdk1.8'
             }
         }
-        Debian: {
+        'Debian': {
             $available = {
-                6 => 'sun-java6-jdk',
-                7 => 'oracle-java7-jdk',
-                8 => 'oracle-java8-jdk'
+                '6' => 'sun-java6-jdk',
+                '7' => 'oracle-java7-jdk',
+                '8' => 'oracle-java8-jdk'
             }
 
             $alt_names = {
-                6 => 'java-6-sun',
-                7 => 'java-7-oracle',
-                8 => 'java-8-oracle'
+                '6' => 'java-6-sun',
+                '7' => 'java-7-oracle',
+                '8' => 'java-8-oracle'
             }
         }
         default: {

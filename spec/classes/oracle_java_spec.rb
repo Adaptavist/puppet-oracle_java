@@ -12,7 +12,7 @@ describe 'oracle_java', :type => 'class' do
 
   context "Should install sun java 6" do
 
-    let(:params) { { :versions => [6] } }
+    let(:params) { { :versions => ['6'] } }
 
     it do
       should contain_package('sun-java6-jdk')
@@ -24,7 +24,7 @@ describe 'oracle_java', :type => 'class' do
 
   context "Should install sun java 6 and oracle java 7" do
 
-    let(:params) { { :versions => [7,6] } }
+    let(:params) { { :versions => ['7','6'] } }
 
     it do
       should contain_package('sun-java6-jdk')
@@ -34,7 +34,7 @@ describe 'oracle_java', :type => 'class' do
 
   context "Should install sun java 6 and oracle java 8, setting 8 as the default" do
 
-    let(:params) { { :versions => [6,8], :default_ver => 8 } }
+    let(:params) { { :versions => ['6','8'], :default_ver => '8' } }
 
     it do
       should contain_package('oracle-java8-jdk')
@@ -56,7 +56,7 @@ describe 'oracle_java', :type => 'class' do
 
   context "Should link to jdk's on Redhat family" do
     let(:facts) { { :host => Hash.new, :osfamily => 'RedHat' } }
-    let(:params) { { :versions => [7,8], :default_ver => 8 } }
+    let(:params) { { :versions => ['7','8'], :default_ver => '8' } }
 
     it do
       should contain_package('jdk-1.7*')
