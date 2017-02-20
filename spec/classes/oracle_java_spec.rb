@@ -2,18 +2,25 @@ require 'spec_helper'
  
 describe 'oracle_java', :type => 'class' do
 
-  let(:facts) { { :host => Hash.new, :osfamily => 'Debian' } }
-  
   context "Should install oracle java 7" do
+  let(:facts) { { 
+    :host => Hash.new, 
+    :osfamily => 'RedHat',
+    :kernel => 'Linux',
+    :architecture => 'x86_64' } }
+  
     it do
-      should contain_package('oracle-java7-jdk')
+      should contain_java__oracle('7').with(
+        :ensure => 'present')
     end
   end
 
-  context "Should install sun java 6" do
+  context "Should install sun java 6 on Debian" do
 
     let(:params) { { :versions => ['6'] } }
-
+    let(:facts) { { :host => Hash.new, :osfamily => 'Debian',
+    :kernel => 'Linux',
+    :architecture => 'x86_64' } }
     it do
       should contain_package('sun-java6-jdk')
       should contain_exec('Set default Java version: java-6-sun').with(
@@ -22,32 +29,36 @@ describe 'oracle_java', :type => 'class' do
     end
   end
 
-  context "Should install sun java 6 and oracle java 7" do
+  context "Should install oracle java  6 and 7" do
 
     let(:params) { { :versions => ['7','6'] } }
-
+    let(:facts) { { :host => Hash.new, :osfamily => 'RedHat',
+    :kernel => 'Linux',
+    :architecture => 'x86_64' } }
     it do
-      should contain_package('sun-java6-jdk')
-      should contain_package('oracle-java7-jdk')
+      should contain_java__oracle('6')
+      should contain_java__oracle('7')
     end
   end
 
   context "Should install sun java 6 and oracle java 8, setting 8 as the default" do
 
     let(:params) { { :versions => ['6','8'], :default_ver => '8' } }
-
+    let(:facts) { { :host => Hash.new, :osfamily => 'RedHat',
+    :kernel => 'Linux',
+    :architecture => 'x86_64' } }
     it do
-      should contain_package('oracle-java8-jdk')
-      should contain_package('sun-java6-jdk')
-      should contain_exec('Set default Java version: java-8-oracle').with(
-        'command'   => 'update-java-alternatives -s java-8-oracle'
-      )
+      should contain_java__oracle('8')
+      should contain_java__oracle('6')
+      should contain_exec('Set default Java version: jdk1.8')
     end
   end
 
   context "Should fail with unsupported OS family" do
 
-    let(:facts) { { :osfamily => 'Solaris' } }
+    let(:facts) { { :osfamily => 'Solaris',
+    :kernel => 'Linux',
+    :architecture => 'x86_64' } }
 
     it do
       should raise_error(Puppet::Error, /oracle_java - Unsupported Operating System family: Solaris/)
@@ -55,12 +66,14 @@ describe 'oracle_java', :type => 'class' do
   end
 
   context "Should link to jdk's on Redhat family" do
-    let(:facts) { { :host => Hash.new, :osfamily => 'RedHat' } }
+    let(:facts) { { :host => Hash.new, :osfamily => 'RedHat',
+    :kernel => 'Linux',
+    :architecture => 'x86_64' } }
     let(:params) { { :versions => ['7','8'], :default_ver => '8' } }
 
     it do
-      should contain_package('jdk-1.7*')
-      should contain_package('jdk1.8*')
+      should contain_java__oracle('7')
+      should contain_java__oracle('8')
       should contain_exec('Create symlink for jdk in /var/lib/jvm/jdk8').with(
         'command' => 'ln -sf /usr/java/$(ls /usr/java/ | grep jdk1.8 | sort | tail -1) /usr/lib/jvm/jdk8'
       )

@@ -1,14 +1,22 @@
-define oracle_java::java_install($available, $alt_names, $ensure = 'latest') {
+define oracle_java::java_install($available, $alt_names, $ensure = 'present') {
     $package_name=$available[$name]
+
     if has_key($available, $name) {
         if ($name == '6' and $::operatingsystem == 'ubuntu' and $::operatingsystemrelease == '14.04') {
             package { 'sun-java6-jre':
                 ensure  => $ensure,
             }
+        } elsif ($::osfamily == 'Debian'){
+            package {$package_name:
+                    ensure   => installed,
+                    provider => apt,
+                    require  => Package['apt'];
+            }
         } else {
-            package {
-                $package_name:
-                    ensure => $ensure,
+            java::oracle { $package_name :
+              ensure  => $ensure,
+              version => $name,
+              java_se => 'jdk',
             }
         }
 
@@ -19,7 +27,7 @@ define oracle_java::java_install($available, $alt_names, $ensure = 'latest') {
             exec { "Install alternatives for java ${name}":
                 command  => $alt_cmd_java,
                 provider => shell,
-                require  => Package[$package_name],
+                require  => Java::Oracle[$package_name],
             } ->
             exec { "Install alternatives for javac ${name}":
                 command  => $alt_cmd_javac,
@@ -28,7 +36,7 @@ define oracle_java::java_install($available, $alt_names, $ensure = 'latest') {
             exec { "Create symlink for jdk in /var/lib/jvm/jdk${name}":
                 command  => "ln -sf /usr/java/$(ls /usr/java/ | grep jdk1.${name} | sort | tail -1) /usr/lib/jvm/jdk${name}",
                 provider => shell,
-                require  => [Package[$package_name], File['/usr/lib/jvm']]
+                require  => [Java::Oracle[$package_name], File['/usr/lib/jvm']]
             }
         }
 

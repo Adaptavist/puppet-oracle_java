@@ -9,9 +9,9 @@ class oracle_java(
     case $::osfamily{
         'RedHat': {
             $available = {
-                '6' => 'jdk-1.6*',
-                '7' => 'jdk-1.7*',
-                '8' => 'jdk1.8*'
+                '6' => '6',
+                '7' => '7',
+                '8' => '8'
             }
 
             $alt_names = {
@@ -52,6 +52,7 @@ class oracle_java(
                     mode   => '0644',
             }
         }
+
         oracle_java::java_install { $versions:
             available => $available,
             alt_names => $alt_names,
