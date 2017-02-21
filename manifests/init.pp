@@ -8,12 +8,6 @@ class oracle_java(
 
     case $::osfamily{
         'RedHat': {
-            $available = {
-                '6' => '6',
-                '7' => '7',
-                '8' => '8'
-            }
-
             $alt_names = {
                 '6' => 'jdk1.6',
                 '7' => 'jdk1.7',
@@ -21,17 +15,13 @@ class oracle_java(
             }
         }
         'Debian': {
-            $available = {
-                '6' => 'sun-java6-jdk',
-                '7' => 'oracle-java7-jdk',
-                '8' => 'oracle-java8-jdk'
-            }
-
             $alt_names = {
                 '6' => 'java-6-sun',
                 '7' => 'java-7-oracle',
                 '8' => 'java-8-oracle'
             }
+            include apt
+            apt::ppa { 'ppa:webupd8team/java': }
         }
         default: {
             fail("oracle_java - Unsupported Operating System family: ${::osfamily}")
@@ -54,7 +44,6 @@ class oracle_java(
         }
 
         oracle_java::java_install { $versions:
-            available => $available,
             alt_names => $alt_names,
         }
         ->

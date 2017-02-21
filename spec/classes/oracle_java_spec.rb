@@ -4,7 +4,7 @@ describe 'oracle_java', :type => 'class' do
 
   context "Should install oracle java 7" do
   let(:facts) { { 
-    :host => Hash.new, 
+    :host => Hash.new,
     :osfamily => 'RedHat',
     :kernel => 'Linux',
     :architecture => 'x86_64' } }
@@ -18,11 +18,12 @@ describe 'oracle_java', :type => 'class' do
   context "Should install sun java 6 on Debian" do
 
     let(:params) { { :versions => ['6'] } }
-    let(:facts) { { :host => Hash.new, :osfamily => 'Debian',
-    :kernel => 'Linux',
-    :architecture => 'x86_64' } }
+    let(:facts) { { :host => Hash.new, :osfamily => 'Debian', :lsbdistid => 'ubuntu', 
+      :lsbdistcodename => 'trusty',
+      :kernel => 'Linux',
+      :architecture => 'x86_64' } }
     it do
-      should contain_package('sun-java6-jdk')
+      should contain_package('oracle-java6-installer')
       should contain_exec('Set default Java version: java-6-sun').with(
         'command'   => 'update-java-alternatives -s java-6-sun'
       )
