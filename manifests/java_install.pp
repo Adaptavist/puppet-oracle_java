@@ -1,20 +1,17 @@
-define oracle_java::java_install($alt_names, $ensure = 'present') {
-    
+define oracle_java::java_install(
+    $alt_names,
+    $ensure = 'present',
+    ) {
+
     if ($name == '6' and $::operatingsystem == 'ubuntu' and $::operatingsystemrelease == '14.04') {
         $package_name='sun-java6-jre'
         package { $package_name:
             ensure  => $ensure,
         }
     } elsif ($::osfamily == 'Debian') {
-        file { "/tmp/java${$name}.preseed":
-            content => "oracle-java${$name}-installer shared/accepted-oracle-license-v1-1 select true oracle-java${$name}-installer shared/accepted-oracle-license-v1-1 seen true",
-            mode    => '0600',
-            backup  => false,
-        }
         $package_name = "oracle-java${$name}-installer"
         package { $package_name:
-            responsefile => "/tmp/java${$name}.preseed",
-            require      => [Apt::Ppa['ppa:webupd8team/java'], File["/tmp/java${$name}.preseed"]],
+            require => [Apt::Ppa[$oracle_java::deb_ppa_repo], Exec['set-licence-selected'], Exec['set-licence-seen']],
         }
     } else {
         $package_name=$name
