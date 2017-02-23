@@ -20,6 +20,8 @@ describe 'oracle_java', :type => 'class' do
     let(:params) { { :versions => ['6'] } }
     let(:facts) { { :host => Hash.new, :osfamily => 'Debian', :lsbdistid => 'ubuntu', 
       :lsbdistcodename => 'trusty',
+      :lsbdistrelease => '14.04',
+      :lsbdistid => 'Ubuntu',
       :kernel => 'Linux',
       :architecture => 'x86_64' } }
     it do
