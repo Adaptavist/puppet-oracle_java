@@ -1,5 +1,5 @@
 name 'adaptavist/oracle_java'
-version '0.2.9'
+version '1.0.1'
 source 'git@bitbucket.org:Adaptavist/puppet-oracle_java.git'
 author 'adaptavist'
 summary 'oracle_java Module' 
@@ -8,4 +8,8 @@ description 'The **oracle_java** module installs versions of Java JDK (default: 
 project_page 'https://bitbucket.org/Adaptavist/puppet-oracle_java'
 
 ## Add dependencies, if any:
-dependency 'puppetlabs/stdlib'
+dependency 'adaptavist/stdlib'
+dependency 'adaptavist/java'
+dependency 'adaptavist/apt'
+dependency 'adaptavist/packages_repos'
+dependency 'adaptavist/archive'

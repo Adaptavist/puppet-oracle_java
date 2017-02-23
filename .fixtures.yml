@@ -6,5 +6,9 @@ fixtures:
       repo: "https://github.com/Adaptavist/puppetlabs-stdlib"
     apt:
       repo: "https://github.com/Adaptavist/puppetlabs-apt"
+    java:
+      repo: "https://github.com/Adaptavist/puppet-java"
+    archive:
+      repo: "https://github.com/Adaptavist/puppet-archive"
   symlinks:
     oracle_java: "#{source_dir}"
