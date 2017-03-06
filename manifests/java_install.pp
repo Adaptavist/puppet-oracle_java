@@ -29,8 +29,8 @@ define oracle_java::java_install(
 
     if $::osfamily == 'RedHat'{
         $alt_name = $alt_names[$name]
-        $alt_cmd_java="alternatives --install /usr/bin/java java /usr/java/$(ls /usr/java/ | grep jdk1.${name} | sort | tail -1)/bin/java 200000"
-        $alt_cmd_javac="alternatives --install /usr/bin/javac javac /usr/java/$(ls /usr/java/ | grep jdk1.${name} | sort | tail -1)/bin/javac 200000"
+        $alt_cmd_java="alternatives --install /usr/bin/java java /usr/java/$(ls /usr/java/ | grep jdk1.${name} | sort -V| tail -1)/bin/java 200000"
+        $alt_cmd_javac="alternatives --install /usr/bin/javac javac /usr/java/$(ls /usr/java/ | grep jdk1.${name} | sort -V| tail -1)/bin/javac 200000"
         exec { "Install alternatives for java ${name}":
             command  => $alt_cmd_java,
             provider => shell,
