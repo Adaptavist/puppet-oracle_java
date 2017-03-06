@@ -3,7 +3,7 @@ define oracle_java::set_default(){
     # update-alternatives is looking for...
     case $::osfamily{
         'RedHat': {
-            $alternatives_command = "alternatives --set java /usr/java/$(ls /usr/java/ | grep ${name} | sort | tail -1)/bin/java"
+            $alternatives_command = "alternatives --set java /usr/java/$(ls /usr/java/ | grep ${name} | sort -V | tail -1)/bin/java"
             $alternatives_return_value = [0]
         }
         'Debian': {

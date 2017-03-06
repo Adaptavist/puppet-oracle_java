@@ -84,16 +84,16 @@ describe 'oracle_java', :type => 'class' do
           'command' => 'ln -sf /usr/java/$(ls /usr/java/ | grep jdk1.7 | sort | tail -1) /usr/lib/jvm/jdk7'
       )
       should contain_exec('Install alternatives for java 7').with(
-          'command' => 'alternatives --install /usr/bin/java java /usr/java/$(ls /usr/java/ | grep jdk1.7 | sort | tail -1)/bin/java 200000'
+          'command' => 'alternatives --install /usr/bin/java java /usr/java/$(ls /usr/java/ | grep jdk1.7 | sort -V| tail -1)/bin/java 200000'
       )
       should contain_exec('Install alternatives for javac 7').with(
-          'command' => 'alternatives --install /usr/bin/javac javac /usr/java/$(ls /usr/java/ | grep jdk1.7 | sort | tail -1)/bin/javac 200000'
+          'command' => 'alternatives --install /usr/bin/javac javac /usr/java/$(ls /usr/java/ | grep jdk1.7 | sort -V| tail -1)/bin/javac 200000'
       )
       should contain_exec('Install alternatives for java 8').with(
-          'command' => 'alternatives --install /usr/bin/java java /usr/java/$(ls /usr/java/ | grep jdk1.8 | sort | tail -1)/bin/java 200000'
+          'command' => 'alternatives --install /usr/bin/java java /usr/java/$(ls /usr/java/ | grep jdk1.8 | sort -V| tail -1)/bin/java 200000'
       )
       should contain_exec('Install alternatives for javac 8').with(
-          'command' => 'alternatives --install /usr/bin/javac javac /usr/java/$(ls /usr/java/ | grep jdk1.8 | sort | tail -1)/bin/javac 200000'
+          'command' => 'alternatives --install /usr/bin/javac javac /usr/java/$(ls /usr/java/ | grep jdk1.8 | sort -V| tail -1)/bin/javac 200000'
       )
     end
   end
