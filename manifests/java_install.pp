@@ -15,10 +15,15 @@ define oracle_java::java_install(
         }
     } else {
         $package_name=$name
+        # get version defaults to pass to the oracle class
+        $java_version_details = $oracle_java::version_details[$name]
+
         java::oracle { $package_name :
-          ensure  => $ensure,
-          version => $name,
-          java_se => 'jdk',
+          ensure        => $ensure,
+          version       => $name,
+          java_se       => 'jdk',
+          version_major => "${name}u${java_version_details['update_version']}",
+          version_minor => "b${java_version_details['version_minor']}",
         }
     }
 

@@ -1,11 +1,12 @@
 # Installs Oracle Java
 class oracle_java(
-    $versions               = [ '7' ],
-    $default_ver            = undef,
-    $deb_ppa_repo           = 'ppa:webupd8team/java',
-    $ensure                 = 'present',
-    $install_java           = true,
-){
+    $versions               = $oracle_java::params::versions,
+    $default_ver            = $oracle_java::params::default_ver,
+    $deb_ppa_repo           = $oracle_java::params::deb_ppa_repo,
+    $ensure                 = $oracle_java::params::ensure,
+    $install_java           = $oracle_java::params::install_java,
+    $version_details        = $oracle_java::params::version_details,
+) inherits  oracle_java::params {
 
     validate_array($versions)
 
